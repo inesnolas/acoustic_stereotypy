@@ -12,9 +12,7 @@ from tqdm import tqdm
 import pandas as pd
 import glob
 
-# def save_spectrogram_to_plot(name, spect):
 
-#     return 
 
 
 def get_Pos_events_in_time_interval(events_csv, start=0, end=50000 ): #default value for end time argument is over 10 hours! 
@@ -124,17 +122,7 @@ if __name__ == "__main__":
     datasets = os.listdir("/import/c4dm-datasets/DCASE_2022_FSBioSED/Evaluation_set/")
     
     
-    # for dataset_folder in datasets:   
-    #     print(os.path.basename(dataset_folder))
-    #     similarity_with_5examples={}        
-    #     files_in_dataset = glob.glob("/import/c4dm-datasets/DCASE_2022_FSBioSED/Evaluation_set/"+dataset_folder +'/*.csv')
-    #     for events_csv in files_in_dataset:
-            
-    #         audiofilename = events_csv[0:-4]+'.wav'
-    #         print(os.path.basename(audiofilename))
-    #         similarity_with_5examples[os.path.basename(audiofilename)] =  [compute_similarity_with_5examples(events_csv, audiofilename)] 
-    #     pd.DataFrame(similarity_with_5examples.items()).to_csv('/homes/in304/dcase-few-shot-bioacoustic/utils/stereotipy/'+'stereotipy_in_'+ os.path.basename(dataset_folder)+'_with_5edexamples.csv', index=False)
-
+    
     for dataset_folder in datasets:   
         print(os.path.basename(dataset_folder))
         stereotipy={}        
@@ -146,10 +134,3 @@ if __name__ == "__main__":
             stereotipy[os.path.basename(audiofilename)] =  [compute_stereotipy(events_csv, audiofilename)] 
         pd.DataFrame(stereotipy.items()).to_csv('/homes/in304/dcase-few-shot-bioacoustic/utils/stereotipy/'+'stereotipy_in_'+ os.path.basename(dataset_folder)+'_with_10POSrandomlySelectedexamples.csv', index=False)
 
-
-# TO ASK LATER,
-# # does it matter if we chenge the order on temp_match? template, signal or signal, template (in the case where template is larger than signal...)
-
-#taking the max of template matching as the similarity value! 
-#show selected spectrograms!!
-#sample with replacement ??
