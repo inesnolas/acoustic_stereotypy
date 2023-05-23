@@ -1,24 +1,25 @@
 # Acoustic Stereotypy
 Towards measuring Stereotypy in animal calls
 
-This script is heavily based on the code developped for the Template matching baseline at DCASE Challenge task Few Shot Bioacoustic event detection. here:  https://github.com/c4dm/dcase-few-shot-bioacoustic/tree/main/baselines/cross_correlation and is part of our recent publication:  "**Learning to detect an animal sound from five examples**" - https://arxiv.org/abs/2305.13210
+This script is heavily based on the code developped for the Template matching baseline for the Few Shot Bioacoustic sound event detection task at DCASE Challenge: https://github.com/c4dm/dcase-few-shot-bioacoustic/tree/main/baselines/cross_correlation . This metric is also part of our recent publication:  "**Learning to detect an animal sound from five examples**" - https://arxiv.org/abs/2305.13210
 
 ## Description
 
 A metric to evaluate similarity between sound events is needed in order to analyse how stereotyped are the vocalisations.
 
 Here, similarity between two events is defined by the maximum value of their cross correlation. i.e : 
-$sim(t,e) = max_{k} [xcorr(stft_t, stft_e(k:k+L))] $
+
+$$ sim(t,e) = max_{k} [xcorr(stft_t, stft_e(k:k+L))] $$
 
 
  where $stft_t$ is the short term fourier transform of the template event(STFT), and $stft_e(k:k+L)$ is a slice of the STFT of a POS event e; k being the starting time index and L being the duration of the template event t in STFT frames.
 
-. 
+ 
 The first step consists in selecting the "template" events:  these are a random selection of 10 POS events across the whole audio recording.
 Each of the template events is then cross-correlated with 30 randomly selected POS events. The average of the maximum cross correlation across the 30 operations results in a single value representing the average similarity between each template event and the remaining POS events in the audio file.
 The final step is to average again this similarity value across all templates. Formally, these operation can be written as: 
 
-$\frac{1}{T}\sum_{t}^{T}\frac{1}{E}\sum_{e}^{E}sim(t,e), $
+$$ stereotypy = \frac{1}{T} \sum_{t=1}^T \frac{1}{E}\sum_{e=1}^E sim(t,e) $$
 
  where T is the number of template events and E is the number of POS events randomly selected (30 in this implementation)
 
